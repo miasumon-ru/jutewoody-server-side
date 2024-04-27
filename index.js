@@ -33,6 +33,19 @@ async function run() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
 
+        const craftItemCollection = client.db("craftItemDB").collection("craftItem");
+      
+
+        // addCraft api
+        app.post('/addCraftItem', async(req, res)=> {
+            const craftItem = req.body
+            console.log(craftItem)
+
+            const result = await craftItemCollection.insertOne(craftItem);
+
+            res.send(result)
+        })
+
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
