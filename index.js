@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -46,13 +46,25 @@ async function run() {
             res.send(result)
         })
 
-        // get api
+        // get api for CraftItems
 
         app.get("/craftItems", async(req, res)=> {
 
             const cursor = craftItemCollection.find();
 
             const result = await cursor.toArray()
+
+            res.send(result)
+        })
+
+        // get api by id for view details page
+
+        app.get("/viewDetails/:id", async(req, res)=> {
+            const id = req.params.id
+          
+            const query = { _id : new ObjectId(id) };
+
+            const result = await craftItemCollection.findOne(query);
 
             res.send(result)
         })
