@@ -103,6 +103,50 @@ async function run() {
 
         })
 
+        //  api for Update Craft
+
+        app.get("/updatePage/:id", async(req, res)=> {
+            
+            const id = req.params.id
+
+            const query = { _id: new ObjectId(id) };
+
+            const result = await craftItemCollection.findOne(query);
+
+            res.send(result)
+        })
+
+        // update the craftItem
+
+        app.put("/updatePage", async(req, res)=> {
+
+            const craftItem = req.body
+
+            console.log("object for updating : ", craftItem )
+
+            
+            const query = { _id: new ObjectId(craftItem._id) };
+
+            const options = { upsert: true };
+
+            const updateDoc = {
+                $set: {
+                    photoURL : craftItem.photoURL,
+                    itemName : craftItem.itemName,
+                    price : craftItem.price,
+                    rating : craftItem.rating,
+                    customization : craftItem.customization,
+                    stockStatus : craftItem.stockStatus
+                },
+              };
+          
+              const result = await craftItemCollection.updateOne(query, updateDoc, options);
+
+              res.send(result)
+
+            
+        })
+
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
