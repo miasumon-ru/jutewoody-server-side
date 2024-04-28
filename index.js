@@ -69,6 +69,40 @@ async function run() {
             res.send(result)
         })
 
+        // crafts All api 
+
+        app.get("/craftsAll", async(req, res)=> {
+
+
+            const cursor = craftItemCollection.find();
+
+            const result = await cursor.toArray()
+
+            res.send(result)
+
+
+
+        })
+
+        // My Craft List api
+
+        app.get("/myLists/:email" , async(req, res)=> {
+
+            const email = req.params.email
+            console.log("email for myList :", email)
+
+            const query = { userEmail: email }
+
+            const cursor = craftItemCollection.find(query);
+            const result = await cursor.toArray()
+
+
+            res.send(result)
+
+        
+
+        })
+
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
