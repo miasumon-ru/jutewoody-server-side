@@ -120,10 +120,7 @@ async function run() {
 
         app.put("/updatePage", async(req, res)=> {
 
-            const craftItem = req.body
-
-            console.log("object for updating : ", craftItem )
-
+            const craftItem = req.body       
             
             const query = { _id: new ObjectId(craftItem._id) };
 
@@ -145,6 +142,18 @@ async function run() {
               res.send(result)
 
             
+        })
+
+        // api for deleting
+        app.delete("/deleteCraftItem/:id", async(req, res)=> {
+
+            const id = req.params.id
+            console.log("id for deleting", id)
+
+            const query = { _id: new ObjectId(id) };
+            const result = await craftItemCollection.deleteOne(query);
+
+            res.send(result)
         })
 
 
