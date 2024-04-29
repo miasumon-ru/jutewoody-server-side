@@ -138,7 +138,10 @@ async function run() {
                     price : craftItem.price,
                     rating : craftItem.rating,
                     customization : craftItem.customization,
-                    stockStatus : craftItem.stockStatus
+                    stockStatus : craftItem.stockStatus,
+                    shortDescription : craftItem.shortDescription,
+                    processingTime : craftItem.processingTime,
+                    subCategoryName : craftItem.subCategoryName
                 },
               };
           
