@@ -34,6 +34,10 @@ async function run() {
         // await client.connect();
 
         const craftItemCollection = client.db("craftItemDB").collection("craftItem");
+        const craftCategoryCollection = client.db("craftCategoryDB").collection("craftCategory");
+
+        // console.log(craftItemCollection)
+       
       
 
         // addCraft api
@@ -42,8 +46,9 @@ async function run() {
             console.log(craftItem)
 
             const result = await craftItemCollection.insertOne(craftItem);
+            // const categories = await craftCategoryCollection.insertOne(craftItem);
 
-            res.send(result)
+            res.send( result )
         })
 
         // get api for CraftItems
@@ -153,6 +158,27 @@ async function run() {
             const query = { _id: new ObjectId(id) };
             const result = await craftItemCollection.deleteOne(query);
 
+            res.send(result)
+        })
+
+        // categories related api
+
+
+        app.get("/categories", async(req, res)=> {
+            const cursor = craftCategoryCollection.find();
+
+            const result = await cursor.toArray()
+            res.send(result)
+        })
+
+        app.get("/subCategoryNameAll/:name", async(req, res)=> {
+            const subName = req.params.name    
+
+            const query = {subCategoryName : subName };
+
+            const cursor = craftItemCollection.find(query);
+
+            const result = await cursor.toArray()
             res.send(result)
         })
 
